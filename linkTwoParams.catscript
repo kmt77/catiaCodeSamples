@@ -1,0 +1,40 @@
+' Sample CATIA CATScript to link two parameters using a formula
+
+Sub CATMain()
+
+    ' Get the CATIA application
+    Dim CATIA As Object
+    Set CATIA = GetObject(, "CATIA.Application")
+    
+    ' Get the active document (assumed to be a Part document)
+    Dim partDocument As Object
+    Set partDocument = CATIA.ActiveDocument
+    
+    ' Get the part object
+    Dim part As Object
+    Set part = partDocument.Part
+    
+    ' Get the parameters collection
+    Dim parameters As Object
+    Set parameters = part.Parameters
+    
+    ' Create a new parameter (Parameter1)
+    Dim param1 As Object
+    Set param1 = parameters.CreateDimension("Parameter1", "LENGTH", 50)
+    
+    ' Create another parameter (Parameter2)
+    Dim param2 As Object
+    Set param2 = parameters.CreateDimension("Parameter2", "LENGTH", 100)
+    
+    ' Create a formula to link Parameter1 to Parameter2
+    ' Parameter1 will be equal to Parameter2
+    Dim formula As Object
+    Set formula = part.Relations.CreateFormula("Param1Formula", "", param1, "Parameter2")
+    
+    ' Update the part to apply the formula
+    part.Update
+    
+    ' Notify the user
+    MsgBox "Parameters linked successfully!"
+
+End Sub
