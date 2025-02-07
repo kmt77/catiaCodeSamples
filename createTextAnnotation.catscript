@@ -1,0 +1,42 @@
+' Sample CATIA CATScript to create a text annotation
+
+Sub CATMain()
+
+    ' Get the CATIA application
+    Dim CATIA As Object
+    Set CATIA = GetObject(, "CATIA.Application")
+    
+    ' Get the active document (assumed to be a Part document)
+    Dim partDocument As Object
+    Set partDocument = CATIA.ActiveDocument
+    
+    ' Get the part object
+    Dim part As Object
+    Set part = partDocument.Part
+    
+    ' Get the annotation sets collection
+    Dim annotationSets As Object
+    Set annotationSets = part.AnnotationSets
+    
+    ' Create a new annotation set
+    Dim annotationSet As Object
+    Set annotationSet = annotationSets.Add("MyAnnotationSet")
+    
+    ' Create a new annotation factory
+    Dim annotationFactory As Object
+    Set annotationFactory = annotationSet.AnnotationFactory
+    
+    ' Create a new text annotation
+    Dim textAnnotation As Object
+    Set textAnnotation = annotationFactory.CreateText("This is a sample annotation.", 0, 0, 0)
+    
+    ' Set the position of the text annotation
+    textAnnotation.SetPosition 100, 100, 100
+    
+    ' Update the part to apply the annotation
+    part.Update
+    
+    ' Notify the user
+    MsgBox "Text annotation created successfully!"
+
+End Sub
