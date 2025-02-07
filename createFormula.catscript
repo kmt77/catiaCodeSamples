@@ -1,0 +1,35 @@
+' Sample CATIA CATScript to create a formula
+
+Sub CATMain()
+
+    ' Get the CATIA application
+    Dim CATIA As Object
+    Set CATIA = GetObject(, "CATIA.Application")
+    
+    ' Get the active document (assumed to be a Part document)
+    Dim partDocument As Object
+    Set partDocument = CATIA.ActiveDocument
+    
+    ' Get the part object
+    Dim part As Object
+    Set part = partDocument.Part
+    
+    ' Get the parameters collection
+    Dim parameters As Object
+    Set parameters = part.Parameters
+    
+    ' Create a new parameter
+    Dim lengthParam As Object
+    Set lengthParam = parameters.CreateDimension("LengthParam", "LENGTH", 50)
+    
+    ' Create a new formula
+    Dim formula As Object
+    Set formula = part.Relations.CreateFormula("LengthFormula", "", lengthParam, "100 + 20")
+    
+    ' Update the part to apply the formula
+    part.Update
+    
+    ' Notify the user
+    MsgBox "Formula created successfully!"
+
+End Sub
