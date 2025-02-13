@@ -1,0 +1,32 @@
+' Creating a New Part
+' This script demonstrates:
+' Creating a new part.
+' Adding a sketch to the part.
+' Naming the hybrid body and sketch for better organization.
+
+Sub CATMain()
+    ' Create a new part document
+    Dim partDoc As Document
+    Set partDoc = CATIA.Documents.Add("Part")
+    
+    ' Access the Part object
+    Dim part As Part
+    Set part = partDoc.Part
+
+    ' Add a new sketch to the part
+    Dim hybridBodies As HybridBodies
+    Set hybridBodies = part.HybridBodies
+    Dim hybridBody As HybridBody
+    Set hybridBody = hybridBodies.Add()
+    hybridBody.Name = "MyHybridBody"
+    
+    Dim sketches As Sketches
+    Set sketches = hybridBody.HybridSketches
+    Dim origin As Reference
+    Set origin = part.OriginElements.PlaneXY
+    Dim sketch As Sketch
+    Set sketch = sketches.Add(origin)
+    sketch.Name = "BaseSketch"
+    
+    MsgBox "Part and sketch created successfully!"
+End Sub
